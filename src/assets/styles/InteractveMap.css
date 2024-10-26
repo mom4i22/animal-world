@@ -1,0 +1,25 @@
+/* /* InteractiveMap.css */
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #333333 !important;
+}
+
+.interactive-map {
+  width: 100vw;
+  height: 100px;
+}
+
+.continent_name {
+  position: fixed;
+  bottom: 10%;
+  left: 10%;
+  font-size: 4rem;
+  color: white;
+  user-select: none;
+  text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, -1px -1px 0 #000;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: 600;
+}
