@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import "../../assets/styles/InteractveMap.css";
+import { continents } from "../../constants";
 
 const InteractiveMap: React.FC = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -45,18 +46,10 @@ const InteractiveMap: React.FC = () => {
     scene.add(map);
 
     // Continent regions for detection
-    interface ContinentRegion {
-      name: string;
-      xMin: number;
-      xMax: number;
-      yMin: number;
-      yMax: number;
-    }
-
-    const continentRegions: ContinentRegion[] = [
+    const continentRegions = [
       { name: "North America", xMin: -1.5, xMax: -0.2, yMin: -0.2, yMax: 0.8 },
       { name: "South America", xMin: -0.9, xMax: -0.4, yMin: -0.9, yMax: -0.2 },
-      { name: "Europe", xMin: -0.35, xMax: 0.2, yMin: 0.05, yMax: 0.5 },
+      { name: "Europe", xMin: -0.45, xMax: 0.2, yMin: 0.05, yMax: 0.5 },
       { name: "Africa", xMin: -0.3, xMax: 0.35, yMin: -0.7, yMax: 0.1 },
       { name: "Asia", xMin: 0.2, xMax: 1.5, yMin: -0.4, yMax: 0.7 },
       { name: "Australia", xMin: 0.7, xMax: 1.7, yMin: -0.9, yMax: -0.4 },
@@ -99,6 +92,7 @@ const InteractiveMap: React.FC = () => {
           setContinentName(detectedContinent);
           map.material.map = textures[detectedContinent];
           map.material.needsUpdate = true;
+          console.log(`Detected Continent: ${detectedContinent}`);
         } else if (!detectedContinent) {
           resetMapTexture();
         }
@@ -108,12 +102,10 @@ const InteractiveMap: React.FC = () => {
     }
 
     function resetMapTexture() {
-      if (currentContinent !== null) {
-        currentContinent = null;
-        setContinentName("");
-        map.material.map = continentTexture;
-        map.material.needsUpdate = true;
-      }
+      currentContinent = null;
+      setContinentName("");
+      map.material.map = continentTexture;
+      map.material.needsUpdate = true;
     }
 
     window.addEventListener("mousemove", onMouseMove);
@@ -128,7 +120,7 @@ const InteractiveMap: React.FC = () => {
         entries.forEach((entry) => {
           setIsMapVisible(entry.isIntersecting);
           if (!entry.isIntersecting) {
-            setContinentName(""); // Clear continent name when leaving the section
+            resetMapTexture();
           }
         });
       },
@@ -157,7 +149,12 @@ const InteractiveMap: React.FC = () => {
 
   return (
     <div ref={mountRef} className="interactive-map" id="explore">
-      <div className="continent_name">{continentName}</div>
+      <div className="continent_info">
+        <div className="continent_name">{continentName}</div>
+        <div className="continent_fact">
+          {continents[continentName]?.funFact}
+        </div>
+      </div>
     </div>
   );
 };

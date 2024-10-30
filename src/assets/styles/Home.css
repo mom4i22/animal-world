@@ -1,4 +1,7 @@
 /* Home.css */
+@import "/node_modules/slick-carousel/slick/slick.css";
+@import "/node_modules/slick-carousel/slick/slick-theme.css";
+
 body {
   overflow-y: auto;
 }
@@ -15,8 +18,23 @@ body {
 }
 
 .our-mission-section {
-  top: 0;
-  padding: 4rem 2rem;
-  background-color: #ffed00; /* Optional: to distinguish sections */
+  padding: 2rem 2rem;
+  width: 90vw;
+  background-color: #fcd800;
   text-align: center;
+}
+
+.carousel-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.carousel-container .slick-slide {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.slick-track {
+  height: 100vh;
 }
