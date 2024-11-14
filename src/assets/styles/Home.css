@@ -1,0 +1,40 @@
+/* Home.css */
+@import "/node_modules/slick-carousel/slick/slick.css";
+@import "/node_modules/slick-carousel/slick/slick-theme.css";
+
+body {
+  overflow-y: auto;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.interactive-map-section {
+  height: 100vh;
+  display: flex;
+}
+
+.our-mission-section {
+  padding: 2rem 2rem;
+  width: 90vw;
+  background-color: #f3cf3b;
+  text-align: center;
+}
+
+.carousel-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.carousel-container .slick-slide {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.slick-track {
+  height: 100vh;
+}
