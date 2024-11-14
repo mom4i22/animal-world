@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as THREE from "three";
 import "../../assets/styles/InteractveMap.css";
 import { ContinentsListProps, formatToSmallCaps } from "../../models";
@@ -17,7 +18,9 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
   const [continentAudio, setContinentAudio] = useState<string>("");
   const [isMapVisible, setIsMapVisible] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [userInteracted, setUserInteracted] = useState<boolean>(false);
   const currentContinentRef = useRef<string | null>(null);
+  const navigate = useNavigate(); // React Router hook to navigate
 
   const continentAudioFiles: { [key: string]: string } = {
     north_america: northAmericaAudio,
@@ -27,6 +30,22 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
     asia: asiaAudio,
     australia: australiaAudio,
   };
+
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      setUserInteracted(true);
+      document.removeEventListener("click", handleUserInteraction);
+      document.removeEventListener("keydown", handleUserInteraction);
+    };
+
+    document.addEventListener("click", handleUserInteraction);
+    document.addEventListener("keydown", handleUserInteraction);
+
+    return () => {
+      document.removeEventListener("click", handleUserInteraction);
+      document.removeEventListener("keydown", handleUserInteraction);
+    };
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -128,7 +147,7 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
             continentAudioFiles[formatToSmallCaps(detectedContinent)];
           setContinentAudio(newAudio);
 
-          if (audioRef.current) {
+          if (audioRef.current && userInteracted) {
             audioRef.current.src = newAudio;
             audioRef.current.play().catch((error) => {
               console.warn("Autoplay was prevented:", error);
@@ -139,6 +158,14 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
         }
       } else {
         resetMapTexture();
+      }
+    }
+
+    function onMouseClick() {
+      if (currentContinentRef.current) {
+        navigate(
+          `/continents/${formatToSmallCaps(currentContinentRef.current)}`
+        );
       }
     }
 
@@ -156,6 +183,7 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
     }
 
     window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("click", onMouseClick);
     window.addEventListener("resize", () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -186,13 +214,14 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
 
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("click", onMouseClick);
       if (mountRef.current) {
         observer.unobserve(mountRef.current);
         mountRef.current.removeChild(renderer.domElement);
       }
       renderer.dispose();
     };
-  }, [isMapVisible]);
+  }, [isMapVisible, userInteracted, navigate]);
 
   useEffect(() => {
     setContinentFact(
@@ -212,7 +241,7 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
         <div className="continent_name">{continentName}</div>
         <div className="continent_fact">{continentFact}</div>
         <div className="audio-container">
-          <audio ref={audioRef} src={continentAudio} autoPlay />
+          <audio ref={audioRef} src={continentAudio} />
         </div>
       </div>
     </div>
