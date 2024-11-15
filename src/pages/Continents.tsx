@@ -1,15 +1,16 @@
 import { Box, Button, useDisclosure } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AnimalsList from "../components/animals/AnimalsList";
 import DetailsDrawer from "../components/animals/DetailsDrawer";
 import { useFetchAnimals } from "../hooks/useFetchAnimals";
+import { useNavigatePage } from "../hooks/useNavigatePage";
 import { Animal } from "../models";
 
 const Continents: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<Animal | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const navigate = useNavigate();
+  const { goBack } = useNavigatePage({});
   const { continentName } = useParams();
   const { animals } = useFetchAnimals(continentName ?? "");
 
@@ -29,7 +30,7 @@ const Continents: React.FC = () => {
       <Button
         variant="ghost"
         mb={4}
-        onClick={() => navigate(-1)}
+        onClick={() => goBack()}
         colorScheme="yellow"
         _hover={{
           bgColor: "transparent",

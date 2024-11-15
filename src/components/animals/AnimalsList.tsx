@@ -1,16 +1,16 @@
-import React, { useState, useRef } from "react";
 import {
   Box,
+  Button,
+  Divider,
+  HStack,
   Input,
   List,
   Tag,
-  Divider,
   Text,
-  HStack,
-  Button,
 } from "@chakra-ui/react";
-import { Animal } from "../../models";
+import React, { useRef, useState } from "react";
 import { searchAnimalsText } from "../../constants";
+import { Animal } from "../../models";
 
 interface AnimalsListProps {
   data: Animal[];

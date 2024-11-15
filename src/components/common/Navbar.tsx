@@ -1,8 +1,8 @@
-import { Image, IconButton, Box, Flex } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { Box, Flex, IconButton, Image } from "@chakra-ui/react";
 import "../../assets/styles/Navbar.css";
-import { useWindowResize } from "../../hooks/useWinowResize";
 import { useNavigatePage } from "../../hooks/useNavigatePage";
+import { useWindowResize } from "../../hooks/useWinowResize";
 
 interface NavbarProps {
   onNavigate: (page: string) => void;
@@ -13,8 +13,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
 
   const { activePage, isOpen, handleNavigate, setIsOpen } = useNavigatePage({
     onNavigate,
-    pages: ["explore", "mission"],
   });
+
   const handleToggle = () => setIsOpen(!isOpen);
 
   const renderLinks = () => {
@@ -26,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
           className={activePage === "mission" ? "active" : ""}
         >
           Our Mission
-        </a>{" "}
+        </a>
         <a
           href="#explore"
           onClick={() => handleNavigate("explore")}

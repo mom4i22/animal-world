@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
 import {
+  Box,
+  Divider,
   Drawer,
   DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Text,
   Image,
-  Tag,
-  Divider,
   Spinner,
-  Box,
+  Tag,
+  Text,
 } from "@chakra-ui/react";
-import { Animal } from "../../models";
+import React, { useEffect, useState } from "react";
 import "../../assets/styles/Animals.css";
 import { useWindowResize } from "../../hooks/useWinowResize";
+import { Animal } from "../../models";
 
 interface DetailsDrawerProps {
   isOpen: boolean;
@@ -63,7 +63,7 @@ const DetailsDrawer: React.FC<DetailsDrawerProps> = ({
         bg="yellow.500"
         color="#333333"
         className="drawerClass"
-        maxWidth={isMobile ? "90vw" : "30vw"} // Adjusting width for mobile
+        maxWidth={isMobile ? "90vw" : "30vw"}
       >
         <DrawerCloseButton />
         <DrawerHeader>{item?.name}</DrawerHeader>

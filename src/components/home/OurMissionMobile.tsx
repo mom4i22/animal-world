@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Image } from "@chakra-ui/react";
+import { Box, Heading, Image, Text } from "@chakra-ui/react";
 import { ourMissionHeading, ourMissionText } from "../../constants";
 
 const OurMissionMobile = () => {

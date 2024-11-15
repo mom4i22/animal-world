@@ -1,8 +1,7 @@
 import { Box, Divider } from "@chakra-ui/react";
-import React, { useMemo, useRef } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 //@ts-ignore
-import Slider from "react-slick";
 import "../assets/styles/Home.css";
 import Footer from "../components/common/Footer";
 import LoadingScreen from "../components/common/LoadingScreen";
@@ -18,27 +17,10 @@ import { formatToSmallCaps } from "../models";
 
 const Home = () => {
   const { isMobile, isLoading } = useWindowResize(768);
-  const sliderRef = useRef<Slider | null>(null);
   const navigate = useNavigate();
-
-  const settings = useMemo(
-    () => ({
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      arrows: false,
-      swipe: false,
-      draggable: false,
-      touchMove: false,
-    }),
-    []
-  );
 
   const { handleNavigate } = useNavigatePage({
     onNavigate: (page) => console.log(`Navigating to ${page}`),
-    sliderRef,
-    pages: ["explore", "mission"],
   });
 
   const { continents } = useGetContinents();

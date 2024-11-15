@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as THREE from "three";
-import "../../assets/styles/InteractveMap.css";
-import { ContinentsListProps, formatToSmallCaps } from "../../models";
-import northAmericaAudio from "../../assets/audio/north_america.mp3";
-import southAmericaAudio from "../../assets/audio/south_america.mp3";
-import europeAudio from "../../assets/audio/europe.mp3";
 import africaAudio from "../../assets/audio/africa.mp3";
 import asiaAudio from "../../assets/audio/asia.mp3";
 import australiaAudio from "../../assets/audio/australia.mp3";
+import europeAudio from "../../assets/audio/europe.mp3";
+import northAmericaAudio from "../../assets/audio/north_america.mp3";
+import southAmericaAudio from "../../assets/audio/south_america.mp3";
+import "../../assets/styles/InteractveMap.css";
+import { ContinentsListProps, formatToSmallCaps } from "../../models";
 
 const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -143,7 +143,6 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
           currentContinentRef.current = detectedContinent;
           setContinentName(detectedContinent);
 
-          // Check if the texture is already applied
           if (map.material.map !== textures[detectedContinent]) {
             map.material.map = textures[detectedContinent];
             map.material.needsUpdate = true;
@@ -248,7 +247,6 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
     x: number,
     y: number
   ) {
-    // Create a synthetic click event
     const event = new MouseEvent("click", {
       bubbles: true,
       cancelable: false,
@@ -257,7 +255,6 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
     });
 
     if (container) {
-      // Dispatch the event on the container
       container.dispatchEvent(event);
     }
   }
