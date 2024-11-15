@@ -13,7 +13,7 @@ export const useNavigatePage = ({
   pages,
 }: UseNavigatePageParams) => {
   const { isMobile } = useWindowResize();
-  const [activePage, setActivePage] = useState<string>(pages[0]);
+  const [activePage, setActivePage] = useState<string>(pages[1]);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleNavigate = (page: string) => {

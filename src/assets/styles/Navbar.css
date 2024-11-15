@@ -1,10 +1,8 @@
-/* Navbar.css */
-
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: transparent;
+  background-color: #333333;
   color: white;
   display: flex;
   justify-content: center;

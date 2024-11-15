@@ -21,18 +21,18 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
     return (
       <div className="links">
         <a
-          href="#explore"
-          onClick={() => handleNavigate("explore")}
-          className={activePage === "explore" ? "active" : ""}
-        >
-          Explore
-        </a>
-        <a
           href="#mission"
           onClick={() => handleNavigate("mission")}
           className={activePage === "mission" ? "active" : ""}
         >
           Our Mission
+        </a>{" "}
+        <a
+          href="#explore"
+          onClick={() => handleNavigate("explore")}
+          className={activePage === "explore" ? "active" : ""}
+        >
+          Explore
         </a>
       </div>
     );

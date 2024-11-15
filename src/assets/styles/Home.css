@@ -1,10 +1,13 @@
-/* Home.css */
 @import "/node_modules/slick-carousel/slick/slick.css";
 @import "/node_modules/slick-carousel/slick/slick-theme.css";
 
 body {
+  margin: 0;
   overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
 }
+
 .navbar {
   position: fixed;
   top: 0;
@@ -12,16 +15,21 @@ body {
   z-index: 1000;
 }
 
+.our-mission-section {
+  padding: 2rem 2rem;
+  margin-top: 4rem; /* Adjust the margin to position below the navbar */
+  width: 100%;
+  background-color: #f3cf3b;
+  text-align: center;
+}
+
+.our-mission-section#mission {
+  margin-top: 7rem;
+}
+
 .interactive-map-section {
   height: 100vh;
   display: flex;
-}
-
-.our-mission-section {
-  padding: 2rem 2rem;
-  width: 90vw;
-  background-color: #f3cf3b;
-  text-align: center;
 }
 
 .carousel-container {
@@ -37,4 +45,22 @@ body {
 
 .slick-track {
   height: 100vh;
+}
+
+.mobile-container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
+  -webkit-overflow-scrolling: touch;
+}
+
+section {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+footer.footer-class {
+  margin-top: auto;
 }

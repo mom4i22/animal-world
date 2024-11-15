@@ -74,18 +74,14 @@ const Home = () => {
               </footer>
             </div>
           ) : (
-            <Slider
-              {...settings}
-              ref={sliderRef}
-              className="carousel-container"
-            >
+            <div className="desktop-container">
+              <section id="mission" className="our-mission-section">
+                <OurMission />
+              </section>
               <section className="interactive-map-section">
                 <InteractiveMap continents={continents} />
               </section>
-              <section className="our-mission-section">
-                <OurMission />
-              </section>
-            </Slider>
+            </div>
           )}
         </>
       )}

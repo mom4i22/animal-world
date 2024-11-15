@@ -5,7 +5,7 @@ import Footer from "../common/Footer";
 const OurMission = () => {
   return (
     <>
-      <section className="our-mission-section" id="mission">
+      <section className="our-mission-section">
         <Box
           bgImage="url('/img/cover.png')"
           bgPosition="center"

@@ -15,12 +15,11 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [continentName, setContinentName] = useState<string>("");
   const [continentFact, setContinentFact] = useState<string>("");
-  const [continentAudio, setContinentAudio] = useState<string>("");
   const [isMapVisible, setIsMapVisible] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [userInteracted, setUserInteracted] = useState<boolean>(false);
   const currentContinentRef = useRef<string | null>(null);
-  const navigate = useNavigate(); // React Router hook to navigate
+  const navigate = useNavigate();
 
   const continentAudioFiles: { [key: string]: string } = {
     north_america: northAmericaAudio,
@@ -32,6 +31,9 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
   };
 
   useEffect(() => {
+    if (mountRef) {
+      simulateClickOutsideMap(mountRef.current, 2, 0);
+    }
     const handleUserInteraction = () => {
       setUserInteracted(true);
       document.removeEventListener("click", handleUserInteraction);
@@ -140,15 +142,21 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
         ) {
           currentContinentRef.current = detectedContinent;
           setContinentName(detectedContinent);
-          map.material.map = textures[detectedContinent];
-          map.material.needsUpdate = true;
+
+          // Check if the texture is already applied
+          if (map.material.map !== textures[detectedContinent]) {
+            map.material.map = textures[detectedContinent];
+            map.material.needsUpdate = true;
+          }
 
           const newAudio =
             continentAudioFiles[formatToSmallCaps(detectedContinent)];
-          setContinentAudio(newAudio);
 
           if (audioRef.current && userInteracted) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
             audioRef.current.src = newAudio;
+            audioRef.current.load();
             audioRef.current.play().catch((error) => {
               console.warn("Autoplay was prevented:", error);
             });
@@ -235,13 +243,32 @@ const InteractiveMap: React.FC<ContinentsListProps> = ({ continents }) => {
     }
   }, [isMuted]);
 
+  function simulateClickOutsideMap(
+    container: HTMLDivElement | null,
+    x: number,
+    y: number
+  ) {
+    // Create a synthetic click event
+    const event = new MouseEvent("click", {
+      bubbles: true,
+      cancelable: false,
+      clientX: x,
+      clientY: y,
+    });
+
+    if (container) {
+      // Dispatch the event on the container
+      container.dispatchEvent(event);
+    }
+  }
+
   return (
     <div ref={mountRef} className="interactive-map" id="explore">
       <div className="continent_info">
         <div className="continent_name">{continentName}</div>
         <div className="continent_fact">{continentFact}</div>
         <div className="audio-container">
-          <audio ref={audioRef} src={continentAudio} />
+          <audio ref={audioRef} />
         </div>
       </div>
     </div>
